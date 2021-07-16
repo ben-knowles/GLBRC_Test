@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ title }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+  </head>
+
+  <script>
+    var appdata = {{ appdict | tojson | safe }};
+
+    function ListApps() {
+      var cont = document.getElementById('listcontainer');
+      for (var i=0; i < appdata.app_id.length; i++){
+          var appdiv = document.createElement('div');
+          appdiv.innerHTML = "<input type=\'button\' onclick=\'window.location.href=\"/add/"+i+"\";\' value=\'Add\'>";
+          appdiv.innerHTML += "<input type=\'button\' onclick=\'window.location.href=\"/remove/"+i+"\";\' value=\'Remove\'>";
+          appdiv.innerHTML += "<a href=\'"+appdata.link[i]+"\'>"+appdata.name[i]+" (" + appdata.description[i] + ")</a>";
+          cont.appendChild(appdiv);
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        ListApps();
+    });
+  </script>
+
+  <body>
+    <div class="topnav" id="myTopnav">
+      <a href="/logout">Log Out</a>
+      <a href="/main">Main</a>
+    </div>
+
+    <br>
+
+    <div id="listcontainer">
+    </div>
+  </body>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+          var messages = {{ messages | safe }};
+          for (var i=0; i<messages.length; i++) {
+            alert(messages[i]);
+          }
+        </script>
+    {% endif %}
+  {% endwith %}
+
+</html>

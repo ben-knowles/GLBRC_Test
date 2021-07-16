@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ title }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </head>
+
+  <script>
+    var appdata = {{ appdict | tojson | safe }};
+  </script>
+
+  <body>
+    <div class="topnav" id="myTopnav">
+      <a href="/logout">Log Out</a>
+      <a href="/editapps">Add/Remove</a>
+    </div>
+
+    <br>
+
+    <div class="container" id="boxcontainer">
+    </div>
+  </body>
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script>
+          var messages = {{ messages | safe }};
+          for (var i=0; i<messages.length; i++) {
+            alert(messages[i]);
+          }
+        </script>
+    {% endif %}
+  {% endwith %}
+
+</html>
