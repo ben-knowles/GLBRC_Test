@@ -24,12 +24,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
   var dragSrcEl = null;
 
   function handleDragStart(e) {
-    this.style.opacity = '0.4';
-    dragSrcEl = this;
-
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', this.innerHTML);
     e.dataTransfer.setData('text/plain', this.style.backgroundColor);
+
+    this.style.opacity = '0.4';
+    dragSrcEl = this;
   }
 
   function handleDragOver(e) {
